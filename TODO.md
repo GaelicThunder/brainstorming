@@ -1,9 +1,14 @@
 # TODO
 
-- [ ] Judge round: optional 3rd model that scores the two positions instead of joining the debate.
-- [ ] `resume` — reopen a saved transcript and continue the argument in a later session.
+- [ ] Verify `tools: []` actually yields a tool-less agent after a Claude Code restart (see TO_FIX);
+      if not, find the syntax that does.
+- [ ] Idea provenance is hand-tracked by the host. Worth a stricter format so `[both]` ideas can't
+      quietly get re-tagged as the host's in the synthesis.
+- [ ] `resume` — reopen a saved transcript and keep going in a later session.
 - [ ] Auto-save transcripts behind a flag, instead of only on request.
-- [ ] Detect and shortcut "violent agreement" (same idea, different words) earlier than the
-      no-new-argument check.
-- [ ] Peer briefs per domain (firmware, PCB, backend) so the objections land in the right register.
-- [ ] Measure it: does peer disagreement actually change the final decision, or just decorate it?
+- [ ] Lens presets for panel mode (security / maintenance / 3am-operator / cost) so the vantage
+      points are real rather than improvised per run.
+- [ ] Cross-pollination round: hand each peer the *other's* best idea and ask what it unlocks, rather
+      than relaying the whole turn.
+- [ ] Measure it: do `[both]` ideas actually show up in what gets built, or does the host's original
+      position win most of the time anyway?
