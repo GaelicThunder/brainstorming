@@ -1,0 +1,8 @@
+# saved brainstorm transcripts
+brainstorm-*.md
+
+# editor / OS noise
+.DS_Store
+*.swp
+.idea/
+.vscode/
