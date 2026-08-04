@@ -41,7 +41,25 @@ Write, ≤150 words total, no preamble:
 - **UNSURE ABOUT** — the 1–2 things you genuinely can't settle alone.
 
 Gather the facts *before* spawning: read the relevant files, run the command, check the versions.
-The peer has no access to your session — everything it needs must be in the brief.
+The peer has no access to your session — but that does **not** mean you ship it your session.
+
+### Brief discipline — send the slice, not the project
+
+The brief is a scalpel. Hard rules:
+
+- **Never** paste the conversation transcript, a session summary, whole files, directory listings,
+  or "background on the project" the argument doesn't turn on.
+- **Do** send: the problem, the constraints that actually bind, your position, and the exact thing
+  under discussion — one function, one struct, one error, one config block.
+- **Budget**: ≤300 words of prose, plus at most one excerpt of ≤40 lines. Over that, you're
+  briefing, not arguing. Cut until only the contested part is left.
+- **Missing context is handled by the loop, not by pre-loading**: the peer lists what it lacks
+  under `NEED:` and you send exactly that on the next turn. One fact, not the file it came from.
+- **Redact** before sending: keys, tokens, `.env` values, customer or client names, absolute paths
+  that expose them. Rename to `<CLIENT>`, `<TOKEN>` — the argument never depends on the real value.
+
+Why: a peer buried in context stops arguing and starts summarizing, every extra line is paid for on
+every round, and the whole point is a view *not* anchored to everything you already believe.
 
 ## 3. Spawn the peer
 
@@ -50,7 +68,10 @@ One `Agent` call:
 - `model`: the parsed model
 - `subagent_type`: `general-purpose`
 - `run_in_background`: `false` (you need the reply before continuing)
-- `description`: `brainstorm peer` (this is the name you will send to)
+- `description`: `brainstorm peer`
+
+The spawn result ends with `agentId: a…` — **record it**. That id is what you send to; the
+description name is only a fallback.
 
 Prompt = **PEER BRIEF**:
 
@@ -66,7 +87,8 @@ RULES
 - Propose at least one option the framing did not contain.
 - When you agree, say "agreed" once and spend the words on what is still unresolved.
 - Do not hedge into both-sides answers. If asked to pick, pick.
-- No files are shared with you. If a fact is missing, list it under NEED and I will fetch it.
+- You get the contested slice only, deliberately — no repo, no history. If a fact is missing, list
+  it under NEED and I will send that fact (not the whole file) next turn. Argue with what you have.
 - ≤200 words per turn. Bullets. No closing summary, no offer to help further.
 
 REPLY SHAPE
@@ -88,12 +110,29 @@ For each round after the first:
 2. **Answer as yourself**, in-thread: concede what actually lands, refute what doesn't *and why*,
    add what the peer missed, then ask the one question that unblocks the decision.
    At least one substantive pushback per round — never a round of pure agreement.
-3. **Send** it with `SendMessage` → `to`: the peer's name (or the `agentId` from the spawn result),
-   `message`: your turn + any facts it asked for under NEED.
+3. **Send** it with `SendMessage` → `to`: the recorded `agentId`, `message`: your turn + any facts
+   it asked for under NEED.
 4. Repeat.
 
-**Stop early** when a round produces no new argument on either side (both restating) — say
-`converged` and go to synthesis. Also stop on the round cap, or the moment the user says stop.
+⚠️ Unlike the first spawn, `SendMessage` resumes the peer **in the background**: the tool returns
+immediately (`resumed from transcript in the background`) and the actual reply arrives later as a
+task notification. So: do not spawn a second peer because "it didn't answer", do not write the
+round until the notification lands, and never invent the reply. The wait is a good moment to fetch
+the facts it asked for under NEED — have them ready for the next send.
+
+### When to stop
+
+- **Converged** — a round where *both* sides only restate. Say `converged`, go to synthesis.
+- **Cap** — the requested round count, or 6.
+- **User says stop** — immediately.
+
+Do **not** stop early because you think you already know how the peer's alternative plays out. You
+are the side invested in your own position; "I understand the trade-off" is not the same as the
+argument being finished, and the user is watching the exchange to see whether the peer concedes or
+holds. Let it answer.
+
+At the cap with the argument still live, don't just end — say so in one line and offer one more
+round (`still open on X — another round?`). Extra rounds cost money; that call is the user's.
 
 Show every round to the user as it happens, compact:
 
