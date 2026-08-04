@@ -1,5 +1,7 @@
-# saved brainstorm transcripts
-brainstorm-*.md
+# saved brainstorm records / plans, root only — must not match agents/brainstorm-peer.md
+/BRAINSTORM-*.md
+/PLAN-*.md
+/brainstorm-*.md
 
 # editor / OS noise
 .DS_Store
