@@ -43,20 +43,29 @@ Write, ≤150 words total, no preamble:
 Gather the facts *before* spawning: read the relevant files, run the command, check the versions.
 The peer has no access to your session — but that does **not** mean you ship it your session.
 
-### Brief discipline — send the slice, not the project
+### Brief discipline — send what the argument turns on
 
-The brief is a scalpel. Hard rules:
+There is no word limit. There is a relevance test: **would the peer's answer change if this were
+missing?** No → leave it out. Yes → send it, however long it is.
 
-- **Never** paste the conversation transcript, a session summary, whole files, directory listings,
-  or "background on the project" the argument doesn't turn on.
-- **Do** send: the problem, the constraints that actually bind, your position, and the exact thing
-  under discussion — one function, one struct, one error, one config block.
-- **Budget**: ≤300 words of prose, plus at most one excerpt of ≤40 lines. Over that, you're
-  briefing, not arguing. Cut until only the contested part is left.
-- **Missing context is handled by the loop, not by pre-loading**: the peer lists what it lacks
-  under `NEED:` and you send exactly that on the next turn. One fact, not the file it came from.
-- **Redact** before sending: keys, tokens, `.env` values, customer or client names, absolute paths
-  that expose them. Rename to `<CLIENT>`, `<TOKEN>` — the argument never depends on the real value.
+That test scales on its own:
+
+| Brainstorm | Brief |
+|---|---|
+| Name for the project, artistic direction, tone of a UI | a few lines — what it is, who it's for, the names/directions already rejected. Nothing else. Do **not** attach the codebase. |
+| Which of two APIs to expose, where a module boundary goes | the interface, the two call sites that hurt, the constraint that decides it |
+| Architecture, a subtle bug, a protocol choice | as much real material as it genuinely turns on — the whole state machine, the full struct, the actual log. Do not amputate the thing being argued about. |
+
+Regardless of size, never ship the peer the *session*: no conversation transcript, no summary of
+what you and the user did earlier, no "background on the project" tour, no file dumps to save
+yourself a second round. A peer reading 300k of unrelated context stops arguing and starts
+summarizing.
+
+Missing pieces are handled by the loop, not by pre-loading: the peer lists what it lacks under
+`NEED:` and gets exactly that next turn. Two cheap rounds beat one bloated brief.
+
+Strip secrets on the way out — keys, tokens, `.env` values, client names. The argument never
+depends on the real value.
 
 Why: a peer buried in context stops arguing and starts summarizing, every extra line is paid for on
 every round, and the whole point is a view *not* anchored to everything you already believe.
@@ -87,8 +96,8 @@ RULES
 - Propose at least one option the framing did not contain.
 - When you agree, say "agreed" once and spend the words on what is still unresolved.
 - Do not hedge into both-sides answers. If asked to pick, pick.
-- You get the contested slice only, deliberately — no repo, no history. If a fact is missing, list
-  it under NEED and I will send that fact (not the whole file) next turn. Argue with what you have.
+- You get what the argument turns on, deliberately — no repo, no session history. If something is
+  genuinely missing, list it under NEED and I will send it next turn. Argue with what you have.
 - ≤200 words per turn. Bullets. No closing summary, no offer to help further.
 
 REPLY SHAPE

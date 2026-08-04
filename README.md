@@ -97,11 +97,11 @@ on the cheapest peer that still argues back.
 
 ## Limits
 
-- The peer sees **only** the contested slice — no repo, no shell, no session history, and by design
-  not "the project". The brief is capped (≤300 words + one ≤40-line excerpt) and secrets, tokens and
-  client names get redacted out of it. Anything else the peer needs it asks for under `NEED:`, and
-  it gets that single fact — not the file it came from. A peer buried in context stops arguing and
-  starts agreeing.
+- The peer sees only what the argument turns on — no repo, no shell, no session history. There's no
+  word limit: brainstorming a project *name* sends a few lines, brainstorming a state machine sends
+  the whole state machine. What never gets sent is the session itself — transcript, summaries,
+  "background on the project", file dumps. A peer reading 300k of unrelated context stops arguing
+  and starts summarizing. Anything genuinely missing it asks for under `NEED:` and gets next round.
 - The peer thinks, it doesn't touch files. Every change goes through your session.
 - Brainstorming stops at the plan. Implementation is a separate ask.
 

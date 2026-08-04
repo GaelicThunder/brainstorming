@@ -14,9 +14,10 @@
 - **Model availability is not probed** before spawning. An unavailable model surfaces as a failed
   `Agent` call, and the skill has to fall back mid-run rather than up front.
 
-- **Brief discipline is enforced by the model, not mechanically.** Nothing stops an over-eager host
-  from pasting a whole file into the brief; the ≤300-word / ≤40-line cap and the redaction pass are
-  instructions, not a filter. Worth a real pre-send check.
+- **Brief discipline is a judgement call, not a filter.** The rule is relevance ("would the answer
+  change without this?"), deliberately not a word count — so a host that misjudges relevance can
+  still over- or under-brief, and nothing catches it. The secret-stripping pass is an instruction
+  too, not a scrubber.
 
 - **`SendMessage` resumes asynchronously.** Only the first spawn is synchronous; every later round
   returns immediately and the reply lands as a task notification. Documented, but it makes round
