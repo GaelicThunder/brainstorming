@@ -1,10 +1,11 @@
 # Known issues
 
-- **`brainstorm-peer` tool ban is unverified.** The agent ships with `tools: []`, intended to mean
-  "no tools at all". Not yet confirmed empirically — agent definitions only register on a Claude
-  Code restart, so the first run after install should check that the peer really cannot Read/Grep.
-  If an empty list is parsed as "inherit everything", the ban silently becomes honour-system again
-  and the fallback path is what's actually running.
+- **The agent listing misreports the tool ban.** `brainstorm-peer` ships `tools: []` and registers
+  in Claude Code as "(Tools: All tools)" — alarming, but the listing is rendering an empty list as
+  unrestricted. Two probes (2026-08-04), the second explicitly ordering the agent to issue Read and
+  Bash calls and warning that declining counted as a failed diagnostic, both came back with no tools
+  exposed and `tool_uses: 0`. Residual caveat: that is self-report plus an absent tool call, not a
+  read of the harness config. Re-check if a Claude Code release changes agent frontmatter handling.
 
 - **Peer names are not guaranteed unique.** `SendMessage` targets a teammate by name and the latest
   spawn wins. If another agent takes the name mid-brainstorm, the send lands in the wrong context.
@@ -14,9 +15,11 @@
 - **Peers drift back into assistant mode** on long rounds — praise, both-sides summaries, offers to
   help. The brief forbids it and the skill sends one corrective, but smaller models relapse.
 
-- **"At least one new idea per turn" can manufacture filler.** The rule stops a peer from spending
-  its turn only judging, but a model with nothing left will pad rather than say so. The generative
-  stop condition (a round with no new ideas) is meant to catch it; padding defeats that.
+- **The host's `VERIFIED` quota can still be gamed.** It must target the peer's `CHECK:` nomination
+  or whatever claim would change the ranking if false, and the "nothing checkable this round" opt-out
+  is available — a host that leans on the opt-out, or checks something safe, satisfies the letter of
+  the rule and grounds nothing. Same shape as the filler problem that `NEW: none` solved, one layer
+  over.
 
 - **Brief discipline is a judgement call, not a filter.** The rule is relevance ("would the answer
   change without this?"), deliberately not a word count — so a host that misjudges relevance can

@@ -58,9 +58,20 @@ Write, ≤150 words total, no preamble.
 
 - **GOAL** — what would be better, and by how much if there's a number.
 - **CONSTRAINTS** — the real ones (hardware, deadline, existing code, user's preferences).
-- **SEEDS** — the 2–3 ideas you already have, one line each. Seeds, not a proposal: they exist to be
-  built on and beaten, and saying them out loud stops the peer from re-deriving them.
+- **SEEDS** — the 2–3 ideas you already have, one line each, *all* of them. Seeds are fences, not
+  anchors: they mark the territory round-1 `NEW` must fall outside of. Anything adjacent to a seed
+  is a `BUILD`, not a `NEW`.
 - **ALREADY RULED OUT** — with the reason, so the round isn't spent re-proposing them.
+
+Send every seed. Withholding one to see whether the peer independently arrives at it does not buy
+what it looks like it buys: your seeds come from one mind and are correlated, so the ones you *do*
+send leak the direction of the one you don't — the "independent convergence" isn't independent, and
+you paid a full round of the peer's widest thinking to measure nothing. Fences get the range for
+free, because the NEW/BUILD split already carries them.
+
+Equally, don't write soft firewalls ("come up with your own ideas *before* reading the seeds below").
+Everything in the context attends; an LLM cannot un-read the second half of its prompt. The choice is
+binary — genuinely blind, or full reveal with fences. Take fences.
 
 **Decision:**
 
@@ -132,19 +143,28 @@ HOW TO WORK
 - When you disagree, say it plainly and concretely — which input, which state, which failure mode,
   not "it may be risky". Honest disagreement is how we find the weak part.
 - Never agree to be agreeable, and never manufacture a dispute to look rigorous. Both waste a round.
-- Put at least one thing on the table each turn that wasn't there before — an option, a mechanism, a
-  reframing. A turn that only judges my ideas is half a turn.
+- Put something on the table each turn that wasn't there before — an option, a mechanism, a
+  reframing. A turn that only judges my ideas is half a turn. In round 1, `NEW` must fall outside the
+  territory my SEEDS already cover; improvements to a seed are `BUILD`, which is worth just as much.
+- When you're genuinely out of new ideas, write `NEW: none` and say so. That is a legal move and a
+  real contribution — it's one of the signals that ends the brainstorm. Padding to satisfy the rule
+  is the failure the rule exists to prevent.
+- Flag your own riskiest claim each turn under CHECK: the one that, if false, changes the ranking.
+  Nominate it yourself; don't leave me to pick the convenient one to verify.
 - You get what the problem turns on, deliberately — no repo, no session history, no tools. If a fact
-  is genuinely missing, list it under NEED and I'll send it, quoted, next turn.
+  is genuinely missing, list it under NEED — and make it *conditional* where you can ("NEED X; if
+  yes, idea 3 gets stronger; if no, drop it"), so a missing fact forks your thinking instead of
+  blocking the round.
 - Unquoted claims about code are not settled facts. If I say "I checked, you're wrong" without
   quoting the file or output, leave the point in OPEN and say why.
 - <=200 words per turn. Bullets. No closing summary, no offer to help further.
 
 REPLY SHAPE
 THINKING: where you land, and why
-NEW:      ideas you're putting on the table this turn — at least one, terse, numbered
+NEW:      ideas you're putting on the table this turn, terse, numbered (or "none" — a legal move)
 BUILD:    what you'd add to my ideas, or where you'd take them next
 GAP:      what the framing misses, or what concretely worries you
+CHECK:    your own claim that would change the ranking if it turned out false
 OPEN:     what's still unsettled between us, one line each (or "none" — only when true)
 NEED:     ... (omit if none)
 
@@ -167,9 +187,20 @@ For each round after the first:
    the merits instead.
 2. **Answer as yourself**: what of theirs you're taking and where it leads, what you'd add on top,
    where you still see it differently *and why*, then the one question that would move things
-   forward. Put at least one new idea of your own on the table too — same rule as the peer's.
+   forward. Put a new idea of your own on the table too — same rule as the peer's, `none` included.
    A round of pure agreement is a wasted round — if you truly have nothing to add, say so
    and close early rather than padding.
+
+   **Every host turn carries a `VERIFIED` block.** The peer brings range; you bring ground truth,
+   and you are the only one who can — it has no tools, while checking a claim costs you no subagent
+   turn at all. So each turn either quotes a check of one of its claims, or says plainly that
+   nothing this round was checkable. Aim the check at the peer's `CHECK:` nomination, or at whatever
+   claim would change the ranking if false — a quota invites cheap compliance, and verifying some
+   safe piece of trivia while the load-bearing claim goes untouched is worse than skipping it, since
+   it buys the round a look of rigor it didn't earn.
+
+   Print the density dial in the send (`density: wide` / `density: tight — last round`) so the peer
+   never has to infer which phase it's in.
 
    **Keep a running ideas list** as you go: every option either side raises, tagged `host`, `peer`,
    or **`both`** for the ones that only exist because of the exchange — a peer mechanism on a host
@@ -196,14 +227,26 @@ The **last round** flips: say so explicitly in the send (`last round — let's r
 spend it on which ideas actually pay, what each would cost, and what would have to be true for the
 expensive ones to be worth it. Ideas that die here die with a reason attached.
 
+Ask for two blocks in that final turn, and ask for them **before** you show yours:
+
+- **TOP 3** — the ideas the peer would actually ship, ordered, with what each costs or breaks.
+- **SYNTHESIS, 5 lines** — what the brainstorm produced, in the peer's own words.
+
+You write the synthesis, so you decide what the brainstorm *was*. Getting the peer's version
+committed first is the only check on that, and it's free.
+
 Two rounds means one wide and one narrow. If the user asked for ideas and gave you three rounds,
 that's two wide.
 
 ### When to stop
 
 Closing is **two-keyed**: the peer says `OPEN: none`, *and* you have nothing left to put to it. One
-key alone is not agreement. In generative mode add a third condition — a round where neither side
-produced a new idea. Ideas drying up is the real signal there; agreement is not.
+key alone is not agreement. In generative mode add a third condition — a round where both sides
+wrote `NEW: none`. Ideas drying up is the real signal there; agreement is not.
+
+This is why `NEW: none` has to be a legal move: a mandate to produce a new idea every turn makes the
+third key unreachable, and a peer that must invent something will invent filler — manufacturing
+exactly the noise the key was meant to detect.
 
 - **Closed** — peer's `OPEN` is empty and so is yours. Say `closed`, go to synthesis.
 - **Cap** — the requested round count, or 6. Anything still in `OPEN` carries into the synthesis.
@@ -273,6 +316,12 @@ NEXT STEPS   — concrete, ordered
 DROPPED      — ideas considered and set aside, with the reason
 ```
 
+**Print the peer's own synthesis next to yours, and name every item of its five lines that yours
+leaves out.** Not "we mostly agreed" — the specific omissions. You hold the pen, so the way your
+position wins is not by contradicting the peer, it's by quietly not mentioning things: a reader can
+compare two stated emphases, but they cannot see what was never written down. The omission list is
+the only part of this the reader can't reconstruct for themselves.
+
 Credit honestly in either shape: if the peer's angle is what made the answer, say so plainly. If you
 held your position under pressure, say that too. The user needs to know which parts survived contact
 and which were never tested.
@@ -288,17 +337,26 @@ Two ways to get real coverage out of a panel, best used together:
 
 - **Different models** — different training, different blind spots. This is what the user picks
   when they name two models.
-- **Different lenses** — give each peer a genuine vantage point to think from (the security angle,
-  the maintenance angle, the "who has to operate this at 3am" angle). Not assigned advocacy: a lens
-  is where you stand, not a side you must defend. Harvest what each lens *finds*; distrust how each
-  ranks its own findings, since a lens always thinks its own concern is the biggest one.
+- **Different lenses** — give each peer a genuine vantage point to think from. Not assigned advocacy:
+  a lens is where you stand, not a side you must defend. A preset is three things, and the third is
+  what makes it auditable:
+  - **focus** — what it cares about (security / maintenance / cost / who operates this at 3am)
+  - **characteristic question** — what it always asks first ("what happens when this is attacked?",
+    "who fixes this at 3am with no context?")
+  - **declared blind spot** — what this angle is known to under-weight, stated up front
+
+  Harvest what each lens *finds*; distrust how each ranks its own findings, since a lens always
+  thinks its own concern is the biggest one.
 
 Relay each peer's turns to the others **verbatim** inside your `SendMessage` — turns are ≤200 words,
 so paraphrasing saves nothing and reintroduces exactly the filtering this skill avoids everywhere
-else. They can't see each other; you are their only channel, so don't editorialize on it.
+else. Strip the attribution and the lens when you relay: an idea judged as "the security peer's"
+gets answered as a position to be placed rather than a thing to think about. They can't see each
+other; you are their only channel, so don't editorialize on it.
 
-In the last send, drop the lens: *"forget the angle you were given — what still stands?"* What
-survives de-roling is real; what evaporates was scaffolding, and belongs in DROPPED.
+In the last send, drop the lens: *"forget the angle you were given — what still stands?"* Audit each
+peer's turns against its own declared blind spot while you're there. What survives de-roling is real;
+what evaporates was scaffolding, and belongs in DROPPED.
 
 Panel costs a round per peer per round — default to 2 rounds when there are 2+ peers.
 

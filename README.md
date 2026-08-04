@@ -37,12 +37,19 @@ with a few rules that keep it honest in both directions:
 - The peer is briefed as a thinking partner with its own angle — bring what the framing lacks,
   finish the host's half-formed thoughts, and say plainly when something is wrong and *what breaks*.
   Never agree to be agreeable; never manufacture a dispute to look rigorous.
-- The host has to take what's good, including the parts that make its own position worse — and when
-  it corrects the peer on a fact, it must **quote** the file or output. "I checked, you're wrong" is
-  unfalsifiable when only one side can see the repo, and the peer is told to leave such points open.
+- **Asymmetric duties.** The peer owes `NEW` — an idea that wasn't on the table. The host owes
+  `VERIFIED` — a quoted check of the peer's claims, which costs no subagent turn because the host is
+  the only side with a repo. Each quota is guarded against its own filler: `NEW: none` is a legal
+  move, and the host's check must target the claim that would change the ranking if false, not a
+  safe piece of trivia.
+- **Correct with quotes or not at all.** "I checked, you're wrong" is unfalsifiable when only one
+  side can see the repo, and the peer is told to leave such points open.
 - Closing is **two-keyed**: the peer says `OPEN: none` *and* the host has nothing left to raise.
   A host can't declare agreement on its own, because "we're both just restating" is also what being
   stonewalled looks like.
+- **The last word is checked.** The peer commits its own top-3 and its own 5-line synthesis *before*
+  seeing the host's, and the host must name everything of the peer's its version leaves out. Whoever
+  writes the summary decides what the brainstorm was, and omission is the channel a reader can't see.
 
 ## Install
 
@@ -126,11 +133,14 @@ Ask for it to be saved and the transcript lands in `brainstorm-<slug>-<date>.md`
 
 Name two or more models and each gets its own subagent. Coverage comes from two levers, best used
 together: **different models** (different training, different blind spots) and **different lenses** —
-each peer given a genuine vantage point to think from, the security angle, the maintenance angle, the
-who-operates-this-at-3am angle. A lens is where you stand, not a side you must defend.
+each peer given a genuine vantage point to think from. A lens is where you stand, not a side you must
+defend, and a preset is three things: a focus, the question it always asks first, and its **declared
+blind spot** — what this angle is known to under-weight, stated up front so it can be audited later.
 
-Turns are relayed between peers verbatim. In the last round the lens is dropped — *"forget the angle
-you were given, what still stands?"* — and whatever evaporates goes to DROPPED.
+Turns are relayed between peers verbatim, with the lens and the attribution stripped: an idea judged
+as "the security peer's" gets answered as a position to be placed rather than a thing to think about.
+In the last round the lens is dropped — *"forget the angle you were given, what still stands?"* — each
+peer is audited against its declared blind spot, and whatever evaporates goes to DROPPED.
 
 ## Cost
 
